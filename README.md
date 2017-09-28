@@ -18,8 +18,8 @@ This is where the tool comes into place.
 ## Usage
 
 Use it in your command line. There are multiple use-cases implemented:
-* Discover (-d): Discover new hosts given in the command line using DNS lookups.
-* Update (-u): Update the known hosts in the database using DNS and tested host reachability. 
+* **Discover (-d):** Discover new hosts given in the command line using DNS lookups.
+* **Update (-u):** Update the known hosts in the database using DNS and tested host reachability. 
 
 Full command line parameters:
 ```
@@ -40,6 +40,33 @@ Full command line parameters:
 The files involved are:
 * `~/.ssh/config`: The SSH config being read to and written to.
 * `~/.sshconfig.json`: A JSON file that holds the data for all hosts. Is used to track which hosts are reachable or not, because only reachable hosts are takeninto the SSH client config above.
+
+## Installation
+
+There's a Debian package provided for installation.
+It installs to `/opt/sshconfig`, the executable is 
+`/opt/sshconfig/sshconfig`.
+
+## Building
+
+The system requirements for building are
+* Oracle JDK 8
+* Apache Maven for building
+* Apache Ant for packaging
+
+Building can be triggered with the command
+```
+mvn clean package
+```
+
+Packaging can be triggered with the command
+```
+ant
+```
+
+Packaging depends heavily on the packages installed on your system, please
+see [here](https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/self-contained-packaging.html)
+for the requirements.
 
 ## License
 
