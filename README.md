@@ -1,8 +1,12 @@
 # SSHConfig
 
-Maintenance helper tool for maintaining SSH client configs.
+Tool for helping maintain SSH client configs.
 
-The tool will alter your SSH client config. It will backup the last file, but not all.
+SSHConfig has the ability to probe for (new) hosts using the
+DNS service and add the hosts to your SSH config.
+Out of that it can connect to SSH servers and find out which servers are reachable and which aren't.
+
+It will backup the last file, but not all.
 
 ## Purpose
 
@@ -16,6 +20,20 @@ This is where the tool comes into place.
 Use it in your command line. There are multiple use-cases implemented:
 * Discover (-d): Discover new hosts given in the command line using DNS lookups.
 * Update (-u): Update the known hosts in the database using DNS and tested host reachability. 
+
+Full command line parameters:
+```
+ -database (-D) FILE : The database to use. (Default: /home/$LOGINUSER/.sshconfig.j
+                       son)
+ -discover (-d)      : Discover hosts given in the command line using DNS.
+                       (Default: false)
+ -help (-h)          : Show this command line help. (Default: true)
+ -set-user (-Z)      : Set the user name. (Default: false)
+ -sshcfg (-s) FILE   : The ssh config to update. (Default:
+                       /home/$LOGINUSER/.ssh/config)
+ -update (-u)        : Update all hosts IP addresses. (Default: false)
+ -user (-U) USER     : The user name to use. (Default: $LOGINUSER)
+```
 
 ## Files
 
