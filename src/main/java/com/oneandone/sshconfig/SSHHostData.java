@@ -43,7 +43,7 @@ public class SSHHostData {
 
         int c;
         while ((c = inputStreamReader.read()) != -1) {
-            if (c == '\n') {
+            if (c == '\n' || c == '\r') {
                 break;
             }
             myServerId.append((char)c);

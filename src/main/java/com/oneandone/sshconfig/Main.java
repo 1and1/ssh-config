@@ -20,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import com.oneandone.sshconfig.bind.Host;
 import org.slf4j.MDC;
 import static java.util.stream.Collectors.*;
+
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 /**
@@ -28,12 +30,18 @@ import java.util.stream.Stream;
  */
 @Slf4j
 public class Main {
-    
+
+    private final StatusLine statusLine;
+
+    public Main() {
+        statusLine = new StatusLine(System.err);
+    }
+
     /** Discover a list of hosts by their DNS name. Will only
      * return the discovered hosts. The others will be silently
      * dropped.
      */
-    private static List<Host> discover(List<String> discover) {
+    private List<Host> discover(List<String> discover) {
         log.debug("Discovering started for {} args", discover.size());
         
         List<Host> hosts = discover
@@ -50,7 +58,7 @@ public class Main {
     /** Discover a single host using DNS. Silently ignores DNS / IO errors.
      * @return the Host generated or none result if an error occured.
      */
-    private static Optional<Host> ignorantDiscover(String in) {
+    private Optional<Host> ignorantDiscover(String in) {
         try {
             MDC.put("in", in);
             if (in.isEmpty()) {
@@ -70,7 +78,8 @@ public class Main {
     /** Discover a single host by DNS.
      * @param in a dns resolvable name.
      */
-    private static Host discover(String in) throws UnknownHostException {
+    private Host discover(String in) throws UnknownHostException {
+        statusLine.print(in);
         InetAddress address = InetAddress.getByName(in);
         Host result = new Host();
         result.setId(UUID.randomUUID());
@@ -78,6 +87,7 @@ public class Main {
         InetAddress[] all = InetAddress.getAllByName(in);
         List<String> allIps = Stream.of(all).map(i -> i.getHostAddress()).collect(toList());
         result.setIps(allIps.toArray(new String[all.length]));
+        statusLine.printf("%s -> %s", in, allIps.toString());
         int idx = in.indexOf(".");
         result.setName(idx != -1 ? in.substring(0, idx) : in);
         result.setCreatedAt(new Date());
@@ -88,11 +98,18 @@ public class Main {
     /** Discover a single host by DNS.
      * @param hosts the list of hosts to update
      */
-    private static void update(List<Host> hosts) throws UnknownHostException {
+    private void update(List<Host> hosts) throws UnknownHostException {
+        AtomicInteger atomicInteger = new AtomicInteger();
         hosts.stream().parallel().forEach(h -> {
             try {
                 updateFqdn(h);
                 updateServerAndReachability(h);
+                int val = atomicInteger.addAndGet(1);
+                statusLine.printf("%d/%d. %s -> %s",
+                        val,
+                        hosts.size(),
+                        h.getName(),
+                        h.getSshServerVersion());
             }
             finally {
                 h.setUpdatedAt(new Date());                
@@ -100,7 +117,7 @@ public class Main {
         });
     }
 
-    private static void updateFqdn(Host h) {
+    private void updateFqdn(Host h) {
         try {
             InetAddress[] all = InetAddress.getAllByName(h.getFqdn());
             List<String> allIps = Stream.of(all).map(i -> i.getHostAddress()).collect(toList());
@@ -119,7 +136,7 @@ public class Main {
 
     public final static int SSH_PORT = 22;
 
-    private static void updateServerAndReachability(Host h) {
+    private void updateServerAndReachability(Host h) {
         try {
             SSHHostData sshHostData = SSHHostData.from(new InetSocketAddress(h.getFqdn(), SSH_PORT));
             h.setSshServerVersion(sshHostData.getServerId());
@@ -134,16 +151,17 @@ public class Main {
         if (params == null) {
             return;
         }
-        
+
+        Main main = new Main();
         Database database = Database.fromPath(params.getDb());
         if (params.isDiscover()) {
-            List<Host> hosts = discover(params.getArguments());
+            List<Host> hosts = main.discover(params.getArguments());
             database.update(hosts);
         }
         if (params.isUpdate()) {
             List<Host> hosts = new ArrayList<>();
             hosts.addAll(database.getList());
-            update(hosts);
+            main.update(hosts);
             database.update(hosts);
         }
         
