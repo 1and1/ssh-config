@@ -79,7 +79,6 @@ public class Main {
      * @param in a dns resolvable name.
      */
     private Host discover(String in) throws UnknownHostException {
-        statusLine.print(in);
         InetAddress address = InetAddress.getByName(in);
         Host result = new Host();
         result.setId(UUID.randomUUID());
