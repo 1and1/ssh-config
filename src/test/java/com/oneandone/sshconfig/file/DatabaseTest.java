@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.oneandone.sshconfig.file;
+package com.oneandone.sshconfig.file;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.UUID;
 import org.junit.Test;
-import org.oneandone.sshconfig.bind.Host;
+import com.oneandone.sshconfig.bind.Host;
 import static org.junit.Assert.*;
 
 /**

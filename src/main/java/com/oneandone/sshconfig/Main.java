@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.oneandone.sshconfig;
+package com.oneandone.sshconfig;
 
-import org.oneandone.sshconfig.file.SSHConfig;
-import org.oneandone.sshconfig.file.Database;
+import com.oneandone.sshconfig.file.SSHConfig;
+import com.oneandone.sshconfig.file.Database;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
-import org.oneandone.sshconfig.bind.Host;
+import com.oneandone.sshconfig.bind.Host;
 import org.slf4j.MDC;
 import static java.util.stream.Collectors.*;
 import java.util.stream.Stream;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.oneandone.sshconfig.file;
+package com.oneandone.sshconfig.file;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.oneandone.sshconfig.bind.Host;
+import com.oneandone.sshconfig.bind.Host;
 
 /**
  * Stores all {@link Host} records to a file.

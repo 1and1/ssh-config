@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.oneandone.sshconfig.file;
+package com.oneandone.sshconfig.file;
 
 import java.io.File;
 import java.io.IOException;

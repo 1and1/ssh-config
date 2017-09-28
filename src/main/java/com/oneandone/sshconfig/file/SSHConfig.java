@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.oneandone.sshconfig.file;
+package com.oneandone.sshconfig.file;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,9 +16,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+
+import com.oneandone.sshconfig.bind.Host;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.logging.MDC;
-import org.oneandone.sshconfig.bind.Host;
 
 /**
  * The SSH configuration file. Separates the tool-maintained  part

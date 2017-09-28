@@ -1,4 +1,4 @@
-package org.oneandone.sshconfig;
+package com.oneandone.sshconfig;
 
 import lombok.AccessLevel;
 import lombok.Getter;
