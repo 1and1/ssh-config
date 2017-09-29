@@ -145,31 +145,36 @@ public class Main {
         }
     }
     
-    public static void main(String[] args) throws IOException {
-        Params params = Params.parse(args);
-        if (params == null) {
-            return;
-        }
+    public static void main(String[] args) {
+        try {
+            Params params = Params.parse(args);
+            if (params == null) {
+                return;
+            }
 
-        Main main = new Main();
-        Database database = Database.fromPath(params.getDb());
-        if (params.isDiscover()) {
-            List<Host> hosts = main.discover(params.getArguments());
-            database.update(hosts);
+            Main main = new Main();
+            Database database = Database.fromPath(params.getDb());
+            if (params.isDiscover()) {
+                List<Host> hosts = main.discover(params.getArguments());
+                database.update(hosts);
+            }
+            if (params.isUpdate()) {
+                List<Host> hosts = new ArrayList<>();
+                hosts.addAll(database.getList());
+                main.update(hosts);
+                database.update(hosts);
+            }
+
+            database.save();
+
+            if (params.getSshConfig() != null) {
+                SSHConfig sshc = SSHConfig.fromPath(params.getSshConfig());
+                sshc.pushOwn(database.getList(), params.isSetUser() ? Optional.of(params.getUser()) : Optional.empty());
+                sshc.save();
+            }
         }
-        if (params.isUpdate()) {
-            List<Host> hosts = new ArrayList<>();
-            hosts.addAll(database.getList());
-            main.update(hosts);
-            database.update(hosts);
-        }
-        
-        database.save();
-        
-        if (params.getSshConfig() != null) {
-            SSHConfig sshc = SSHConfig.fromPath(params.getSshConfig());
-            sshc.pushOwn(database.getList(), params.isSetUser() ? Optional.of(params.getUser()) : Optional.empty());
-            sshc.save();
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
