@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.oneandone.sshconfig;
+package de.unitedinternet.sshconfig;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,9 +29,10 @@ import java.nio.charset.Charset;
 /** Data gathered directly from the SSH server.
  * @author Stephan Fuhrmann
  * */
-public class SSHHostData {
+public final class SSHHostData {
 
-    private final static int TIMEOUT = 5000;
+    /** The default connect timeout in milliseconds. */
+    private static final int TIMEOUT = 5000;
 
     /** The SSH id version string of the server. */
     @Getter @Setter(AccessLevel.PRIVATE)
@@ -41,17 +42,27 @@ public class SSHHostData {
     @Getter @Setter(AccessLevel.PRIVATE)
     private InetSocketAddress address;
 
+    /** Private constructor. */
     private SSHHostData() {
-
     }
 
-    public static SSHHostData from(InetSocketAddress serverAddress) throws IOException {
+    /**
+     * Initializes a SSHHostData from a server address.
+     * @param serverAddress the socket address of the server. Usually
+     * points to TCP port 22.
+     * @return the initialized SSH host data.
+     * @throws IOException if there was an error in connecting or
+     * reading the socket.
+     */
+    public static SSHHostData from(
+            final InetSocketAddress serverAddress) throws IOException {
         Socket socket = new Socket();
         socket.connect(serverAddress, TIMEOUT);
         socket.setSoTimeout(TIMEOUT);
         InputStream inputStream = socket.getInputStream();
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("ASCII"));
-
+        InputStreamReader inputStreamReader = new InputStreamReader(
+                inputStream,
+                Charset.forName("ASCII"));
         StringBuilder myServerId = new StringBuilder();
 
         SSHHostData result = new SSHHostData();
@@ -61,7 +72,7 @@ public class SSHHostData {
             if (c == '\n' || c == '\r') {
                 break;
             }
-            myServerId.append((char)c);
+            myServerId.append((char) c);
         }
         result.setServerId(myServerId.toString());
         result.setAddress(serverAddress);

@@ -13,26 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.oneandone.sshconfig;
-
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 
 /**
- *
- * @author Stephan Fuhrmann
+ * The main package with the main class and parameter parsing stuff.
  */
-public class ParamsTest {
-    @Test
-    public void testParseWithoutUser() {
-        Params params = Params.parse(new String [] {});
-        assertNotNull(params.getUser());
-    }
-    
-    @Test
-    public void testParseWithUser() {
-        Params params = Params.parse(new String [] {"-user", "foomaster"});
-        assertEquals("foomaster", params.getUser());
-    }
-}
+package de.unitedinternet.sshconfig;

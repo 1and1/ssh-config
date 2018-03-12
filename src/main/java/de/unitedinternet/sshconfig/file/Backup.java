@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.oneandone.sshconfig.file;
+package de.unitedinternet.sshconfig.file;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,19 +26,20 @@ import lombok.extern.slf4j.Slf4j;
  * @author Stephan Fuhrmann
  */
 @Slf4j
-class Backup {
+final class Backup {
     /** Suffix for the backup file. */
-    private final static String BACKUP_SUFFIX = ".bak";
-    
+    private static final String BACKUP_SUFFIX = ".bak";
+
+    /** No instance allowed. */
     private Backup() {
         // no instance
-    }    
-
+    }
 
     /** Renames the file to a backup name, moving it away.
      * @param p the file to backup / move away.
+     * @throws IOException if renaming fails.
      */
-    public static void moveToBackup(Path p) throws IOException {
+    public static void moveToBackup(final Path p) throws IOException {
         Path parent = p.getParent();
         Path backup = parent.resolve(p.getFileName() + BACKUP_SUFFIX);
 

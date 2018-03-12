@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.oneandone.sshconfig;
+package de.unitedinternet.sshconfig;
 
-import com.oneandone.sshconfig.file.SSHConfig;
-import com.oneandone.sshconfig.file.Database;
+import de.unitedinternet.sshconfig.file.SSHConfig;
+import de.unitedinternet.sshconfig.file.Database;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
-import com.oneandone.sshconfig.bind.Host;
+import de.unitedinternet.sshconfig.bind.Host;
 import org.slf4j.MDC;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
@@ -40,9 +40,13 @@ import java.util.stream.Stream;
  */
 @Slf4j
 public class Main {
+    /** The default TCP port to use. */
+    public static final int SSH_PORT = 22;
 
+    /** The status line to output the current progress with. */
     private final StatusLine statusLine;
 
+    /** Constructs an instance. */
     public Main() {
         statusLine = new StatusLine(System.err);
     }
@@ -50,10 +54,12 @@ public class Main {
     /** Discover a list of hosts by their DNS name. Will only
      * return the discovered hosts. The others will be silently
      * dropped.
+     * @param discover the list of FQDNs / IPs to discover.
+     * @return the list of discovered hosts.
      */
-    private List<Host> discover(List<String> discover) {
+    private List<Host> discover(final List<String> discover) {
         log.debug("Discovering started for {} args", discover.size());
-        
+
         List<Host> hosts = discover
                 .stream()
                 .parallel()
@@ -61,53 +67,65 @@ public class Main {
                 .filter(h -> h.isPresent())
                 .map(h -> h.get())
                 .collect(toList());
-        
+
         return hosts;
     }
-    
+
     /** Discover a single host using DNS. Silently ignores DNS / IO errors.
-     * @return the Host generated or none result if an error occured.
+     * @param in the FQDN / IP to try to discover.
+     * @return the Host generated or {@linkplain Optional#empty() empty}
+     * result if an error occured.
      */
-    private Optional<Host> ignorantDiscover(String in) {
+    private Optional<Host> ignorantDiscover(final String in) {
         try {
             MDC.put("in", in);
             if (in.isEmpty()) {
                 return Optional.empty();
             }
-            
+
             return Optional.of(discover(in));
         } catch (UnknownHostException ex) {
             log.warn(in, ex);
             return Optional.empty();
-        }
-        finally {
+        } finally {
             MDC.remove("in");
         }
     }
-    
+
     /** Discover a single host by DNS.
      * @param in a dns resolvable name.
+     * @return the discovered host entry.
+     * @throws UnknownHostException if the host could not be resolved
+     * by domain name service.
      */
-    private Host discover(String in) throws UnknownHostException {
+    private Host discover(final String in) throws UnknownHostException {
         InetAddress address = InetAddress.getByName(in);
         Host result = new Host();
         result.setId(UUID.randomUUID());
         result.setFqdn(address.getCanonicalHostName());
         InetAddress[] all = InetAddress.getAllByName(in);
-        List<String> allIps = Stream.of(all).map(i -> i.getHostAddress()).collect(toList());
+        List<String> allIps = Stream.of(all)
+                .map(i -> i.getHostAddress())
+                .collect(toList());
         result.setIps(allIps.toArray(new String[all.length]));
         statusLine.printf("%s -> %s", in, allIps.toString());
         int idx = in.indexOf(".");
-        result.setName(idx != -1 ? in.substring(0, idx) : in);
+        if (idx != -1) {
+            result.setName(in.substring(0, idx));
+        } else {
+            result.setName(in);
+        }
         result.setCreatedAt(new Date());
         result.setUpdatedAt(result.getCreatedAt());
         return result;
     }
-    
+
     /** Discover a single host by DNS.
-     * @param hosts the list of hosts to update
+     * @param hosts the list of hosts to update.
+     * @throws UnknownHostException if the host could not be resolved
+     * by domain name service.
      */
-    private void update(List<Host> hosts) throws UnknownHostException {
+    private void update(final List<Host> hosts) throws UnknownHostException {
         AtomicInteger atomicInteger = new AtomicInteger();
         hosts.stream().parallel().forEach(h -> {
             try {
@@ -119,17 +137,21 @@ public class Main {
                         hosts.size(),
                         h.getName(),
                         h.getSshServerVersion());
-            }
-            finally {
-                h.setUpdatedAt(new Date());                
+            } finally {
+                h.setUpdatedAt(new Date());
             }
         });
     }
 
-    private void updateFqdn(Host h) {
+    /** Updates the fully-qualified domain name of the host.
+     * @param h the host to update the FQDN of.
+     */
+    private void updateFqdn(final Host h) {
         try {
             InetAddress[] all = InetAddress.getAllByName(h.getFqdn());
-            List<String> allIps = Stream.of(all).map(i -> i.getHostAddress()).collect(toList());
+            List<String> allIps = Stream.of(all)
+                    .map(i -> i.getHostAddress())
+                    .collect(toList());
             h.setIps(allIps.toArray(new String[all.length]));
         } catch (UnknownHostException ex) {
             try {
@@ -143,19 +165,26 @@ public class Main {
         }
     }
 
-    public final static int SSH_PORT = 22;
-
-    private void updateServerAndReachability(Host h) {
+    /** Updates the SSH server version and the reachability information.
+     * Unreachable hosts will be {@link Host#enabled disabled}.
+     * @param h the host to update the data form.
+     */
+    private void updateServerAndReachability(final Host h) {
         try {
-            SSHHostData sshHostData = SSHHostData.from(new InetSocketAddress(h.getFqdn(), SSH_PORT));
+            SSHHostData sshHostData = SSHHostData.from(
+                    new InetSocketAddress(h.getFqdn(), SSH_PORT));
             h.setSshServerVersion(sshHostData.getServerId());
         } catch (IOException ex) {
-            log.warn("Host "+h.getName()+" is not reachable. Disabling.", ex);
+            log.warn("Host " + h.getName() + " is not reachable. Disabling.",
+                    ex);
             h.setEnabled(false);
         }
     }
-    
-    public static void main(String[] args) {
+
+    /** Entry point for the program.
+     * @param args the command line arguments for parsing with {@link Params}.
+     */
+    public static void main(final String[] args) {
         try {
             Params params = Params.parse(args);
             if (params == null) {
@@ -179,11 +208,14 @@ public class Main {
 
             if (params.getSshConfig() != null) {
                 SSHConfig sshc = SSHConfig.fromPath(params.getSshConfig());
-                sshc.pushOwn(database.getList(), params.isSetUser() ? Optional.of(params.getUser()) : Optional.empty());
+                Optional<String> userOptional = Optional.empty();
+                if (params.isSetUser()) {
+                    userOptional = Optional.of(params.getUser());
+                }
+                sshc.pushOwn(database.getList(), userOptional);
                 sshc.save();
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

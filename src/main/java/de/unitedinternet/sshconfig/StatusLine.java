@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.oneandone.sshconfig;
+package de.unitedinternet.sshconfig;
 
 import java.io.PrintStream;
 import java.util.Objects;
@@ -24,33 +24,44 @@ import java.util.stream.IntStream;
  * Status line on console.
  * @author Stephan Fuhrmann
  * */
-public class StatusLine {
+public final class StatusLine {
     /** Width of last printed line in characters. */
     private int width;
+
     /** Stream to print to. */
     private final PrintStream out;
 
-    public StatusLine(PrintStream printStream) {
+    /**
+     * Constructs a new instance.
+     * @param printStream the print stream to write to.
+     */
+    public StatusLine(final PrintStream printStream) {
         this.out = Objects.requireNonNull(printStream);
     }
 
     /** Format and print a String.
+     * @param format the format String similar to
+     * {@link String#format(java.lang.String, java.lang.Object...) }.
+     * @param args the optional arguments for the format.
      * @see String#format(String, Object...)
      * */
-    public void printf(String format, Object... args) {
+    public void printf(final String format,
+            final Object... args) {
         print(String.format(format, args));
     }
 
     /** Print a String.
      * @param str the String to print.
      * */
-    public synchronized void print(String str) {
+    public synchronized void print(final String str) {
         int lastWidth = width;
         String fill = "";
         if (str.length() < lastWidth) {
-            fill = IntStream.range(0, lastWidth - str.length()).mapToObj(s -> " ").collect(Collectors.joining());
+            fill = IntStream.range(0, lastWidth - str.length())
+                    .mapToObj(s -> " ")
+                    .collect(Collectors.joining());
         }
-        out.print("\r"+str+fill);
+        out.print("\r" + str + fill);
         width = str.length();
     }
 }
