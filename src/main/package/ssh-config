@@ -1,0 +1,44 @@
+#! /bin/bash
+
+# Copyright 2018 1&1 Internet SE.
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+PRG=$0
+BASE=$(basename ${PRG})
+JARBASE=/usr/share/${BASE}
+JAR=${JARBASE}/${BASE}-jar-with-dependencies.jar
+
+if [ "x$JAVA_HOME" = "x" ]; then
+    if [ -h /etc/alternatives/java ]; then
+	    export JAVA_HOME=$(cd $(dirname $(readlink -f "/etc/alternatives/java"))/../..; pwd)
+    fi
+fi
+
+if [ ! -d ${JARBASE} ]; then
+    cat <<DELIMITER
+Expecting the directory ${JARBASE} to exist.
+Please install package properly.
+DELIMITER
+    exit 1
+fi
+
+if [ ! -f ${JAR} ]; then
+    cat <<DELIMITER
+Expecting the file ${JAR} to exist.
+Please install package properly.
+DELIMITER
+    exit 1
+fi
+
+java ${JAVAOPTS} -jar $JAR "$@"
