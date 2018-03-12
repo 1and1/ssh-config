@@ -71,7 +71,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.oneandone.sshconfig.Main</mainClass>
+                            <mainClass>de.unitedinternet.sshconfig.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
