@@ -35,7 +35,7 @@ Full command line parameters:
  -user (-U) USER     : The user name to use. (Default: $LOGINUSER)
 ```
 
-### Use case 1: Add new hosts to your ~/.ssh/config
+### Use case 1: Add new hosts to your `$HOME/.ssh/config`
 
 To add new hosts to your ssh config you typically issue a command like this:
 
@@ -44,7 +44,7 @@ $ ssh-config -d vm-alpha vm-beta vm-gamma
 $
 ```
 
-After this there are entries in the database $HOME/.sshconfig.json
+After this there are entries in the database `$HOME/.sshconfig.json`
 
 ```
 ...
