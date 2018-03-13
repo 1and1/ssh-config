@@ -85,3 +85,10 @@ install:
     owner: root
     group: root
     mode: rw-r--r--
+- copy:
+    from: AUTHORS
+    to: /usr/share/doc/meetingminutesasaservice/AUTHORS
+    owner: root
+    group: root
+    mode: rw-r--r--
+
