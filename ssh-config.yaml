@@ -73,7 +73,7 @@ versions:
 # Where to install what on the target system?
 install:
 - copy:
-    from: target/SSHConfig-1.0.1-SNAPSHOT-jar-with-dependencies.jar
+    from: target/SSHConfig-1.0.1-jar-with-dependencies.jar
     to: /usr/share/ssh-config/ssh-config-jar-with-dependencies.jar
     owner: root
     group: root
