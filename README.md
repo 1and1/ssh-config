@@ -44,6 +44,7 @@ The files involved are:
 ## Installation
 
 There's a Debian and a CentOS package provided for installation.
+Please see the [Releases](https://github.com/1and1/ssh-config/releases) section on Github.
 Both install a shell wrapper in `/usr/bin/ssh-config`.
 
 ## Building
