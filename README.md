@@ -35,6 +35,76 @@ Full command line parameters:
  -user (-U) USER     : The user name to use. (Default: $LOGINUSER)
 ```
 
+### Use case 1: Add new hosts to your ~/.ssh/config
+
+To add new hosts to your ssh config you typically issue a command like this:
+
+```
+$ ssh-config -d vm-alpha vm-beta vm-gamma
+$
+```
+
+After this there are entries in the database $HOME/.sshconfig.json
+
+```
+...
+   {
+      "name" : "vm-alpha",
+      "createdAt" : 1504778353193,
+      "enabled" : true,
+      "fqdn" : "vm-alpha.foo.domain",
+      "sshServerVersion" : "SSH-2.0-OpenSSH_6.7p1 Debian-5+deb8u3",
+      "id" : "a7369847-e833-49bd-af95-e0d1292b3ed6",
+      "updatedAt" : 1520958429041,
+      "ips" : [
+         "10.123.123.123"
+      ]
+   },
+...
+```
+
+and in your $HOME/.ssh/config:
+
+```
+...
+# <<< BEGIN{a7369847-e833-49bd-af95-e0d1292b3ed6}
+Host vm-alpha
+	Hostname vm-alpha.foo.domain
+	Hostname 10.123.123.123
+# >>> END{a7369847-e833-49bd-af95-e0d1292b3ed6}
+...
+```
+
+### Use case 2: Update hosts to your ~/.ssh/config
+
+To update the existing hosts to your ssh config you typically issue a command like this:
+
+```
+$ ssh-config -u
+$
+```
+
+After this there are updated entries in the database $HOME/.sshconfig.json
+
+```
+...
+   {
+      "name" : "vm-alpha",
+      "createdAt" : 1504778353193,
+      "enabled" : false,
+      "fqdn" : "vm-alpha.foo.domain",
+      "sshServerVersion" : "SSH-2.0-OpenSSH_6.7p1 Debian-5+deb8u3",
+      "id" : "a7369847-e833-49bd-af95-e0d1292b3ed6",
+      "updatedAt" : 1520959605730,
+      "ips" : [
+         "10.123.123.123"
+      ]
+   },
+...
+```
+
+And the host is removed because of no longer reachability in your $HOME/.ssh/config.
+
 ## Files
 
 The files involved are:
