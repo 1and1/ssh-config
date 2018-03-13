@@ -52,7 +52,6 @@ Both install a shell wrapper in `/usr/bin/ssh-config`.
 The system requirements for building are
 * Oracle JDK 8
 * Apache Maven for building
-* Apache Ant for packaging
 
 Building can be triggered with the command
 ```
