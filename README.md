@@ -43,9 +43,8 @@ The files involved are:
 
 ## Installation
 
-There's a Debian package provided for installation.
-It installs to `/opt/sshconfig`, the executable is 
-`/opt/sshconfig/sshconfig`.
+There's a Debian and a CentOS package provided for installation.
+Both install a shell wrapper in `/usr/bin/ssh-config`.
 
 ## Building
 
@@ -58,15 +57,6 @@ Building can be triggered with the command
 ```
 mvn clean package
 ```
-
-Packaging can be triggered with the command
-```
-ant
-```
-
-Packaging depends heavily on the packages installed on your system, please
-see [here](https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/self-contained-packaging.html)
-for the requirements.
 
 ## License
 
