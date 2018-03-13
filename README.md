@@ -1,4 +1,4 @@
-# SSHConfig
+# SSHConfig ![Travis CI Status](https://travis-ci.org/1and1/ssh-config.svg?branch=master)
 
 Tool for helping maintain SSH client configs.
 
