@@ -38,7 +38,7 @@ Full command line parameters:
 ## Files
 
 The files involved are:
-* `~/.ssh/config`: The SSH config being read to and written to.
+* `~/.ssh/config`: The SSH config being read to and written to. The SSH-Config specific parts are marked with special magic markers so the config does not get messed up completely.
 * `~/.sshconfig.json`: A JSON file that holds the data for all hosts. Is used to track which hosts are reachable or not, because only reachable hosts are takeninto the SSH client config above.
 
 ## Installation
