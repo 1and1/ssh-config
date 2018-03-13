@@ -1,0 +1,87 @@
+packageName: ssh-config # name of the project package
+buildCommand: mvn --batch-mode clean package
+cleanCommand: mvn --batch-mode clean
+author: # who's the main author of the program TBD: author/maintainer/etc
+  name: Stephan Fuhrmann
+  email: stephan.fuhrmann@1und1.de
+maintainer: # who's the package maintainer of the program
+  name: Stephan Fuhrmann
+  email: stephan.fuhrmann@1und1.de
+shortSummary: Helps maintaining the ssh config file.
+longDescription: |
+  Tool for maintaining the ssh config file located in $HOME/.ssh/config.
+  The file comes handy when doing ssh connects and using bash completion
+  to find the correct host.
+
+  This tool is able to resolve hosts and maintains a database of IPs / FQDNs.
+homepage: https://github.com/1and1/ssh-config # homepage of the project
+license: APACHE_20 # license the project is in
+targets: # which platforms to build an archive for
+- centos_7
+- debian_stretch
+git:
+  gitUrl: https://github.com/1and1/ssh-config.git
+#can't use this until we have a pull request for core/src/main/scripts/google-java-format
+#gitUrl: https://github.com/google/google-java-format.git
+redhat:
+  group: Development Tools
+  relations:
+    depends:
+    - pkg: jre-headless
+      op: ge
+      version: 1.8.0
+    build_depends:
+    - pkg: java-1.8.0-openjdk-headless
+      op: ge
+      version: 1.8.0
+    - pkg: maven
+debian:
+  priority: optional
+  section: devel
+  architecture: all
+  relations:
+    depends:
+    - pkg: java8-runtime-headless
+    build_depends:
+    - pkg: debhelper
+      op: ge
+      version: 10
+    - pkg: openjdk-8-jdk-headless
+    - pkg: maven
+archlinux:
+  architecture: any
+  relations:
+    depends:
+    - pkg: java-runtime
+    build_depends:
+    - pkg: jdk8-openjdk
+    - pkg: maven
+# Version history of the package. Used for Debian changelogs.
+versions:
+- version: 1.0.0 # TBD this needs to match the debian version as a string
+  release: stfu
+  date: 2018-03-12T16:27:00+02:00
+  changes:
+  - Initial version
+# Where to install what on the target system?
+install:
+- copy:
+    from: target/SSHConfig-1.0.0-SNAPSHOT-jar-with-dependencies.jar
+    to: /usr/share/ssh-config/ssh-config-jar-with-dependencies.jar
+    owner: root
+    group: root
+    mode: rw-r--r--
+- copy:
+    from: src/main/package/ssh-config
+    to: /usr/bin/ssh-config
+    owner: root
+    group: root
+    mode: rwxr-xr-x
+- run:
+    command: gzip README.md
+- copy:
+    from: README.md.gz
+    to: /usr/share/doc/ssh-config/README.md.gz
+    owner: root
+    group: root
+    mode: rw-r--r--
