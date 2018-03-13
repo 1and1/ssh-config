@@ -21,8 +21,6 @@ targets: # which platforms to build an archive for
 - debian_stretch
 git:
   gitUrl: https://github.com/1and1/ssh-config.git
-#can't use this until we have a pull request for core/src/main/scripts/google-java-format
-#gitUrl: https://github.com/google/google-java-format.git
 redhat:
   group: Development Tools
   relations:
