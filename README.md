@@ -1,8 +1,8 @@
-# SSHConfig ![Travis CI Status](https://travis-ci.org/1and1/ssh-config.svg?branch=master)
+# SSH-Config ![Travis CI Status](https://travis-ci.org/1and1/ssh-config.svg?branch=master)
 
 Tool for helping maintain SSH client configs.
 
-SSHConfig has the ability to probe for (new) hosts using the
+SSH-Config has the ability to probe for (new) hosts using the
 DNS service and add the hosts to your SSH config.
 Out of that it can connect to SSH servers and find out which servers are reachable and which aren't.
 
@@ -10,7 +10,7 @@ It will backup the last file, but not all.
 
 ## Purpose
 
-The purpose of SSHConfig is to simplify the maintenance of SSH client configurations
+The purpose of SSH-Config is to simplify the maintenance of SSH client configurations
 with many hosts. There are Unix shell completion mechanisms that help to
 expand host names while typing if you have a well-maintained SSH client configuration.
 This is where the tool comes into place.
