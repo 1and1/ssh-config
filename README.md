@@ -1,4 +1,7 @@
-# SSH-Config ![Travis CI Status](https://travis-ci.org/1and1/ssh-config.svg?branch=master)
+SSH-Config
+===================
+![Travis CI Status](https://travis-ci.org/1and1/ssh-config.svg?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e2354f91e2ab4fb48f6e460a0ab1ad99)](https://www.codacy.com/app/sfuhrm/ssh-config?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=1and1/ssh-config&amp;utm_campaign=Badge_Grade)
 
 Tool for helping maintain SSH client configs.
 
