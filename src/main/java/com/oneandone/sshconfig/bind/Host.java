@@ -69,8 +69,8 @@ public class Host {
     private String sshServerVersion;
 
     /** Whether this host is enabled or not. */
-    @Getter @Setter @NotNull
-    private Boolean enabled;
+    @Getter @Setter
+    private boolean enabled;
 
     /** The user to use for this host. */
     @Getter @Setter @Pattern(regexp = "[^ ]{1,}")
@@ -81,6 +81,7 @@ public class Host {
         id = UUID.randomUUID();
         createdAt = new Date();
         updatedAt = createdAt;
+        enabled = true;
     }
 
     /**
