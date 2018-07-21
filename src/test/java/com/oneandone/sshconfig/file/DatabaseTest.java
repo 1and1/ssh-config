@@ -54,8 +54,9 @@ public class DatabaseTest {
     }
 
     @After
-    private void cleanup() throws IOException {
+    public void cleanup() throws IOException {
         tmp.delete();
+        tmp = null;
     }
 
 
