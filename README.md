@@ -4,18 +4,17 @@ SSH-Config
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e2354f91e2ab4fb48f6e460a0ab1ad99)](https://www.codacy.com/app/sfuhrm/ssh-config?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=1and1/ssh-config&amp;utm_campaign=Badge_Grade)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Tool for helping maintain SSH client configs.
+Tool for helping automatically maintain SSH client configs.
+It can be used to maintain a database of your logins to remote hosts.
 
 SSH-Config has the ability to probe for (new) hosts using the
 DNS service and add the hosts to your SSH config.
 Out of that it can connect to SSH servers and find out which servers are reachable and which aren't.
 
-It will backup the last file, but not all.
-
 ## Purpose
 
 The purpose of SSH-Config is to simplify the maintenance of SSH client configurations
-with many hosts. There are Unix shell completion mechanisms that help to
+containing many hosts. There are Unix shell completion mechanisms that help to
 expand host names while typing if you have a well-maintained SSH client configuration.
 This is where the tool comes into place.
 
