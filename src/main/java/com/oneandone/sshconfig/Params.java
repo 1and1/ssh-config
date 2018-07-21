@@ -50,33 +50,38 @@ public final class Params {
     /** Update the hosts in the database. */
     @Getter
     @Option(name = "-update", aliases = {"-u"},
-            usage = "Update all hosts IP addresses.")
+            usage = "Update all database hosts IP addresses.")
     private boolean update;
 
     /** Import into the database. */
     @Getter
     @Option(name = "-import", aliases = {"-i"},
-            usage = "Import a database.")
+            usage = "Import a database. "
+                    + "Reads either from argument or stdin.")
     private boolean importing;
 
     /** Export the database. */
     @Getter
     @Option(name = "-export", aliases = {"-e"},
-            usage = "Export the database. User and group parameters "
+            usage = "Export the database. " +
+                    "Writes to stdout or file argument. "
+                    + "User and group parameters "
                     + "can be used for filtering.")
     private boolean export;
 
     /** The user to set for the host entries. */
     @Getter
     @Option(name = "-user", aliases = {"-U"},
-            usage = "The user name to use for the entry for discovery.",
+            usage = "The user name to use for the entry for discovery"
+                    + " or export filtering.",
             metaVar = "USER")
     private String user;
 
     /** The group to set for the host entries. */
     @Getter
     @Option(name = "-group", aliases = {"-G"},
-            usage = "The group name to use for the entry for discovery.",
+            usage = "The group name to use for the entry for discovery"
+                    + " or export filtering.",
             metaVar = "GROUP")
     private String group;
 
