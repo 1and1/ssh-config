@@ -70,7 +70,7 @@ public class Host {
 
     /** Whether this host is enabled or not. */
     @Getter @Setter
-    private boolean enabled;
+    private Boolean enabled;
 
     /** The user to use for this host. */
     @Getter @Setter @Pattern(regexp = "[^ ]{1,}")
