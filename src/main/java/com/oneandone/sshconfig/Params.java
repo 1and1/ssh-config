@@ -64,7 +64,7 @@ public final class Params {
     @Getter
     @Option(name = "-group", aliases = {"-G"},
             usage = "The group name to use for the entry for discovery.",
-            metaVar = "USER")
+            metaVar = "GROUP")
     private String group;
 
     /** The database file to use. */
