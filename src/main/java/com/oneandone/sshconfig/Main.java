@@ -199,7 +199,6 @@ public final class Main implements AutoCloseable {
      * @throws IOException if the writing fails.
      * */
     private void export(final Database database) throws IOException {
-        List<Host> original = database.getList();
         List<Host> list;
         list = database.getList()
                     .stream()
@@ -209,17 +208,13 @@ public final class Main implements AutoCloseable {
                             || params.getGroup().equals(h.getGroup()))
                     .collect(toList());
 
-        database.replace(list);
-
         if (params.getArguments().isEmpty()) {
-            database.save(new OutputStreamWriter(System.out));
+            database.save(new OutputStreamWriter(System.out), list);
         } else {
             try (FileWriter w = new FileWriter(params.getArguments().get(0))) {
-                database.save(w);
+                database.save(w, list);
             }
         }
-
-        database.replace(original);
     }
 
     /** Entry point for the program.

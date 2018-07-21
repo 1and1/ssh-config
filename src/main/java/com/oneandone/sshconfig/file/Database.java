@@ -106,14 +106,16 @@ public final class Database {
     /** Save database to a writer.
      * @param output the output write to write to.
      *               The writer won't be closed by this call.
+     * @param hostList the list of hosts to write.
      * @throws IOException if the database could not be written.
      * @see #database
      */
-    public void save(final Writer output) throws IOException {
-        validationDelegate.verify(list);
-        sanitize();
+    public static void save(final Writer output,
+                     final List<Host> hostList) throws IOException {
+        ValidationDelegate validationDelegate = new ValidationDelegate();
+        validationDelegate.verify(hostList);
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(output, list);
+        mapper.writeValue(output, hostList);
     }
 
     /** Update internal database with the given list of hosts.
