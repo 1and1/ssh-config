@@ -147,7 +147,7 @@ public final class Database {
      * @param replacement the replacement to replace the list with.
      * */
     public void replace(final List<Host> replacement) {
-        replacement.clear();
-        replacement.addAll(replacement);
+        list.clear();
+        list.addAll(replacement);
     }
 }
