@@ -125,6 +125,9 @@
                 <configuration>
                     <cveValidForHours>12</cveValidForHours>
                     <failBuildOnCVSS>4</failBuildOnCVSS>
+                    <suppressionFiles>
+                        <suppressionFile>src/test/owasp/suppression.xml</suppressionFile>
+                    </suppressionFiles>
                 </configuration>
                 <executions>
                     <execution>
