@@ -63,8 +63,8 @@ public final class Params {
     /** Export the database. */
     @Getter
     @Option(name = "-export", aliases = {"-e"},
-            usage = "Export the database. " +
-                    "Writes to stdout or file argument. "
+            usage = "Export the database. "
+                    + "Writes to stdout or file argument. "
                     + "User and group parameters "
                     + "can be used for filtering.")
     private boolean export;
