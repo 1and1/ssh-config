@@ -40,7 +40,7 @@ import java.util.stream.Stream;
  * @author Stephan Fuhrmann
  */
 @Slf4j
-public class Main {
+public final class Main implements AutoCloseable {
     /** The default TCP port to use. */
     public static final int SSH_PORT = 22;
 
@@ -193,13 +193,12 @@ public class Main {
      * @param args the command line arguments for parsing with {@link Params}.
      */
     public static void main(final String[] args) {
-        try {
-            Params params = Params.parse(args);
-            if (params == null) {
-                return;
-            }
+        Params params = Params.parse(args);
+        if (params == null) {
+            return;
+        }
 
-            Main main = new Main(params);
+        try (Main main = new Main(params)) {
             Database database = Database.fromPath(params.getDb());
             if (params.isDiscover()) {
                 List<Host> hosts = main.discover(params.getArguments());
@@ -219,8 +218,13 @@ public class Main {
                 sshc.pushOwn(database.getList());
                 sshc.save();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void close() throws Exception {
+        statusLine.close();
     }
 }
