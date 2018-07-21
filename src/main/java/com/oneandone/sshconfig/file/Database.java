@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import com.oneandone.sshconfig.validation.ValidationDelegate;
 import lombok.extern.slf4j.Slf4j;
 import com.oneandone.sshconfig.bind.Host;
 import java.util.Objects;
@@ -40,10 +42,14 @@ public final class Database {
     /** The current version of the host list. */
     private List<Host> list;
 
+    /** Bean validation delegate. */
+    private ValidationDelegate validationDelegate;
+
     /** Creates a database referring to the given file system path.
      * @param inDatabase the file system path to relate to.
      */
     private Database(final Path inDatabase) {
+        this.validationDelegate = new ValidationDelegate();
         this.database = Objects.requireNonNull(inDatabase);
     }
 
@@ -59,6 +65,8 @@ public final class Database {
             if (h.getEnabled() == null) {
                 h.setEnabled(Boolean.TRUE);
             }
+
+            validationDelegate.verify(h);
         }
     }
 
@@ -86,6 +94,8 @@ public final class Database {
      * @see #database
      */
     public void save() throws IOException {
+        validationDelegate.verify(list);
+
         ObjectMapper mapper = new ObjectMapper();
 
         Backup.moveToBackup(database);
@@ -100,6 +110,7 @@ public final class Database {
      */
     public void update(final List<Host> in) {
         for (Host h : in) {
+            validationDelegate.verify(h);
             if (list.indexOf(h) == -1) {
                 log.info("Adding unknown host {}", h.getFqdn());
                 list.add(h);

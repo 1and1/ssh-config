@@ -25,6 +25,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+
+import com.oneandone.sshconfig.validation.IpAddress;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -51,7 +53,7 @@ public class Host {
     private String name;
 
     /** The IP addresses of the host. */
-    @Getter @Setter @NotNull @Size(min = 1)
+    @Getter @Setter @NotNull @Size(min = 1) @IpAddress
     private String[] ips;
 
     /** The date of creation of this hosts entry. */
@@ -63,7 +65,7 @@ public class Host {
     private Date updatedAt;
 
     /** The ssh version this host responded with. */
-    @Getter @Setter @NotNull @Size(min = 1)
+    @Getter @Setter @Size(min = 1)
     private String sshServerVersion;
 
     /** Whether this host is enabled or not. */

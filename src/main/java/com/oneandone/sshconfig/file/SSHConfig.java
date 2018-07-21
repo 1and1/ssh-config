@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import com.oneandone.sshconfig.bind.Host;
+import com.oneandone.sshconfig.validation.ValidationDelegate;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.logging.MDC;
 
@@ -71,6 +72,14 @@ public final class SSHConfig {
      */
     private static final String ENTRY_END_FORMAT =
             "# >>> END{%s}";
+
+    /** Java beans validation delegate. */
+    private ValidationDelegate validationDelegate;
+
+    /** Private constructor. */
+    private SSHConfig() {
+        this.validationDelegate = new ValidationDelegate();
+    }
 
     /**
      * Load the ssh configuration from hard disk.
@@ -127,6 +136,7 @@ public final class SSHConfig {
     public void pushOwn(
             final List<Host> hosts) {
         removeOwnEntries();
+        validationDelegate.verify(hosts);
         own = generateOwnEntries(hosts);
     }
 

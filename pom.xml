@@ -11,19 +11,19 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <!-- JSON writing  -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.9.6</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+
+        <!-- Logging  -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.25</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
@@ -34,24 +34,38 @@
             <artifactId>slf4j-ext</artifactId>
             <version>1.7.25</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/args4j/args4j -->
+
+        <!-- Command line parsing  -->
         <dependency>
             <groupId>args4j</groupId>
             <artifactId>args4j</artifactId>
             <version>2.33</version>
         </dependency>
-        <dependency> 
-            <groupId>org.projectlombok</groupId> 
-            <artifactId>lombok</artifactId> 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
             <version>1.18.0</version>
-            <scope>provided</scope> 
-        </dependency> 
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Bean validation -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>6.0.7.Final</version>
         </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>2.2.6</version>
+        </dependency>
+
+        <!-- Unit testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
