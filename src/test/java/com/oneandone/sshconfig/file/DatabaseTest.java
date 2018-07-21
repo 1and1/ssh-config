@@ -19,9 +19,14 @@ import com.oneandone.sshconfig.file.Database;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.UUID;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import com.oneandone.sshconfig.bind.Host;
+import javax.validation.ValidationException;
 import static org.junit.Assert.*;
 
 /**
@@ -29,51 +34,54 @@ import static org.junit.Assert.*;
  * @author Stephan Fuhrmann
  */
 public class DatabaseTest {
-    
-    private static File tmpFile() throws IOException {
-        File tmp = File.createTempFile("sshconfig", ".tmp");
+
+    private Host validHost;
+    private File tmp;
+
+    @Before
+    public void init() throws IOException {
+        validHost = new Host();
+        validHost.setId(UUID.randomUUID());
+        validHost.setName("foo");
+        validHost.setIps(new String[] {"127.0.0.1"});
+        validHost.setEnabled(true);
+        validHost.setFqdn("foo.bar.com");
+        validHost.setCreatedAt(new Date());
+        validHost.setUpdatedAt(validHost.getCreatedAt());
+
+        tmp = File.createTempFile("sshconfig", ".tmp");
         tmp.delete(); // createTempFile creates empty file
-        return tmp;        
     }
-    
-    /** Create new database. */
-    @Test
-    public void newInstanceWithNew() throws IOException {
-        File tmp = tmpFile();
-        Database db = Database.fromPath(tmp.toPath());
-        assertFalse(tmp.exists());
+
+    @After
+    private void cleanup() throws IOException {
         tmp.delete();
     }
-    
+
+
     /** Create new database. */
     @Test
     public void newInstanceWitExisting() throws IOException {
-        File tmp = tmpFile();
         Database db = Database.fromPath(tmp.toPath());
-        Host h = new Host();
-        
-        db.update(Collections.singletonList(h));        
+        Host h = validHost;
+
+        db.update(Collections.singletonList(h));
         assertFalse(tmp.exists());
         db.save();
         assertTrue(tmp.exists());
-        
+
         Database db2 = Database.fromPath(tmp.toPath());
         assertEquals(1, db2.getList().size());
-        
-        tmp.delete();
     }
-    
+
     /** Create new database. */
     @Test
     public void save() throws IOException {
-        File tmp = tmpFile();
         Database db = Database.fromPath(tmp.toPath());
-        Host h = new Host();
-        h.setId(UUID.randomUUID());
-        h.setName("foobar");
+        Host h = validHost;
         db.update(Collections.singletonList(h));
         db.save();
-        
+
         Database db2 = Database.fromPath(tmp.toPath());
         assertEquals(1, db2.getList().size());
         Host h2 = db2.getList().get(0);
@@ -82,7 +90,23 @@ public class DatabaseTest {
         assertNotNull(h2.getCreatedAt());
         assertNotNull(h2.getUpdatedAt());
         assertEquals(true, h2.getEnabled());
-        
-        tmp.delete();
+    }
+
+    @Test(expected = ValidationException.class)
+    public void saveWithIllegalUser() throws IOException {
+        Database db = Database.fromPath(tmp.toPath());
+        Host h = validHost;
+        h.setUser("No Space In User");
+        db.update(Collections.singletonList(h));
+        db.save();
+    }
+
+    @Test(expected = ValidationException.class)
+    public void saveWithIllegalIp() throws IOException {
+        Database db = Database.fromPath(tmp.toPath());
+        Host h = validHost;
+        h.setIps(new String[] {":-)))"});
+        db.update(Collections.singletonList(h));
+        db.save();
     }
 }
