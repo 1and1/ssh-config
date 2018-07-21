@@ -31,6 +31,10 @@ public final class StatusLine implements AutoCloseable {
     /** Stream to print to. */
     private final PrintStream out;
 
+    /** Is there the need for a finishing linefeed?
+     * */
+    private boolean dirty;
+
     /**
      * Constructs a new instance.
      * @param printStream the print stream to write to.
@@ -62,12 +66,15 @@ public final class StatusLine implements AutoCloseable {
                     .collect(Collectors.joining());
         }
         out.print("\r" + str + fill);
+        dirty = true;
         width = str.length();
     }
 
     @Override
     public void close() throws Exception {
-        out.print("\n");
+        if (dirty) {
+            out.print("\n");
+        }
         out.flush();
     }
 }
