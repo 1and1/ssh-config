@@ -216,7 +216,6 @@ public class Main {
 
             if (params.getSshConfig() != null) {
                 SSHConfig sshc = SSHConfig.fromPath(params.getSshConfig());
-                Optional<String> userOptional = Optional.empty();
                 sshc.pushOwn(database.getList());
                 sshc.save();
             }
