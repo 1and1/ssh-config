@@ -18,6 +18,7 @@ package com.oneandone.sshconfig.file;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -95,12 +96,24 @@ public final class Database {
      */
     public void save() throws IOException {
         validationDelegate.verify(list);
+        sanitize();
 
         ObjectMapper mapper = new ObjectMapper();
-
         Backup.moveToBackup(database);
-        sanitize();
         mapper.writeValue(database.toFile(), list);
+    }
+
+    /** Save database to a writer.
+     * @param output the output write to write to.
+     *               The writer won't be closed by this call.
+     * @throws IOException if the database could not be written.
+     * @see #database
+     */
+    public void save(final Writer output) throws IOException {
+        validationDelegate.verify(list);
+        sanitize();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(output, list);
     }
 
     /** Update internal database with the given list of hosts.
@@ -111,11 +124,14 @@ public final class Database {
     public void update(final List<Host> in) {
         for (Host h : in) {
             validationDelegate.verify(h);
-            if (list.indexOf(h) == -1) {
+            int index = list.indexOf(h);
+            if (index == -1) {
                 log.info("Adding unknown host {}", h.getFqdn());
                 list.add(h);
             } else {
-                log.info("Skipping known host {}", h.getFqdn());
+                log.info("Updating known host {}", h.getFqdn());
+                Host update = list.get(index);
+                update.updateHostFrom(h);
             }
         }
     }
