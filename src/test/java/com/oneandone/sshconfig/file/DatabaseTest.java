@@ -45,7 +45,7 @@ public class DatabaseTest {
         validHost.setName("foo");
         validHost.setIps(new String[] {"127.0.0.1"});
         validHost.setEnabled(true);
-        validHost.setFqdn("foo.bar.com");
+        validHost.setFqdn("www.cnn.com");
         validHost.setCreatedAt(new Date());
         validHost.setUpdatedAt(validHost.getCreatedAt());
 
