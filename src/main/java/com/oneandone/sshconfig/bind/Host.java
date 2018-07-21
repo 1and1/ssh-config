@@ -110,4 +110,32 @@ public class Host {
         this.updatedAt = Objects.requireNonNull(inUpdatedAt);
         this.user = inUser;
     }
+
+    /** Update this host from another host.
+     * @param from the host to update from.
+     * */
+    public void updateHostFrom(final Host from) {
+        setUpdatedAt(new Date());
+        if (from.getFqdn() != null) {
+            setFqdn(from.getFqdn());
+        }
+        if (from.getName() != null) {
+            setName(from.getName());
+        }
+        if (from.getIps() != null) {
+            setIps(from.getIps());
+        }
+        if (from.getSshServerVersion() != null) {
+            setSshServerVersion(from.getSshServerVersion());
+        }
+        if (from.getEnabled() != null) {
+            setEnabled(from.getEnabled());
+        }
+        if (from.getUser() != null) {
+            setUser(from.getUser());
+        }
+        if (from.getGroup() != null) {
+            setGroup(from.getGroup());
+        }
+    }
 }
