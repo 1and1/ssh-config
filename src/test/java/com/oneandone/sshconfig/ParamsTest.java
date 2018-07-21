@@ -26,11 +26,17 @@ import static org.junit.Assert.*;
  */
 public class ParamsTest {
     @Test
-    public void testParseWithoutUser() {
+    public void testParseWithDefaultDb() {
         Params params = Params.parse(new String [] {});
-        assertNotNull(params.getUser());
+        assertNotNull(params.getDb());
     }
-    
+
+    @Test
+    public void testParseWithDefaultSshConfig() {
+        Params params = Params.parse(new String [] {});
+        assertNotNull(params.getSshConfig());
+    }
+
     @Test
     public void testParseWithUser() {
         Params params = Params.parse(new String [] {"-user", "foomaster"});

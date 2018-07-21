@@ -18,8 +18,10 @@ package com.oneandone.sshconfig;
 import com.oneandone.sshconfig.file.SSHConfig;
 import com.oneandone.sshconfig.file.Database;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -193,6 +195,27 @@ public final class Main implements AutoCloseable {
         }
     }
 
+    /** Import a database from a {@link Params#getArguments() file}
+     * or from the input stream.
+     * @param database the database to update.
+     * @throws IOException if the reading fails.
+     * */
+    private void importing(final Database database) throws IOException {
+        List<Host> list;
+
+        if (params.getArguments().isEmpty()) {
+            log.debug("Importing from System.in");
+            list = Database.readList(new InputStreamReader((System.in)));
+        } else {
+            log.debug("Importing from file {}", params.getArguments().get(0));
+            try (FileReader r = new FileReader(params.getArguments().get(0))) {
+                list = Database.readList(r);
+            }
+        }
+        log.debug("Updating from {} imported hosts", list.size());
+        database.update(list);
+    }
+
     /** Export the database to the {@link Params#getArguments() file}
      * or to the output stream.
      * @param database the database to write.
@@ -238,6 +261,10 @@ public final class Main implements AutoCloseable {
                 hosts.addAll(database.getList());
                 main.update(hosts);
                 database.update(hosts);
+                database.save();
+            }
+            if (params.isImporting()) {
+                main.importing(database);
                 database.save();
             }
             if (params.isExport()) {

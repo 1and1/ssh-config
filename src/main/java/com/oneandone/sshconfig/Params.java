@@ -53,6 +53,12 @@ public final class Params {
             usage = "Update all hosts IP addresses.")
     private boolean update;
 
+    /** Import into the database. */
+    @Getter
+    @Option(name = "-import", aliases = {"-i"},
+            usage = "Import a database.")
+    private boolean importing;
+
     /** Export the database. */
     @Getter
     @Option(name = "-export", aliases = {"-e"},
@@ -110,7 +116,6 @@ public final class Params {
             }
 
             Params result = new Params();
-            result.user = System.getProperty("user.name");
             result.db = Paths.get(System.getProperty(
                     "user.home"),
                     ".sshconfig.json");

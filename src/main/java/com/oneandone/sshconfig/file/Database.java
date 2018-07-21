@@ -17,7 +17,12 @@ package com.oneandone.sshconfig.file;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.oneandone.sshconfig.bind.Host;
+import com.oneandone.sshconfig.validation.ValidationDelegate;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,10 +30,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
-import com.oneandone.sshconfig.validation.ValidationDelegate;
-import lombok.extern.slf4j.Slf4j;
-import com.oneandone.sshconfig.bind.Host;
 import java.util.Objects;
 
 /**
@@ -69,6 +70,23 @@ public final class Database {
 
             validationDelegate.verify(h);
         }
+    }
+
+    /** Read list of hosts from a file.
+     * @param reader the reader to read the database from.
+     * @return the read list of hosts.
+     * @throws IOException if the database exists, but couldn't be read.
+     * @throws javax.validation.ValidationException if the list is invalid.
+     */
+    public static List<Host> readList(final Reader reader) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        List<Host> hostList = mapper.readValue(
+                reader,
+                new TypeReference<List<Host>>() {
+                });
+        ValidationDelegate validationDelegate = new ValidationDelegate();
+        validationDelegate.verify(hostList);
+        return hostList;
     }
 
     /** Read database from a file.
@@ -124,6 +142,8 @@ public final class Database {
      * hosts will be added.
      */
     public void update(final List<Host> in) {
+        log.debug("Updating {} hosts with {} inputs",
+                list.size(), in.size());
         for (Host h : in) {
             validationDelegate.verify(h);
             int index = list.indexOf(h);
