@@ -67,6 +67,10 @@ public class Host {
     @Getter @Setter @NotNull
     private Boolean enabled;
 
+    /** The user to use for this host. */
+    @Getter @Setter
+    private String user;
+
     /** Constructs a new empty host entry. */
     public Host() {
         id = UUID.randomUUID();
@@ -81,16 +85,19 @@ public class Host {
      * @param inName the human readable name.
      * @param inCreatedAt the creation date.
      * @param inUpdatedAt the date of last update.
+     * @param inUser the user to use.
      */
     public Host(final UUID inId,
             final String inFqdn,
             final String inName,
             final Date inCreatedAt,
-            final Date inUpdatedAt) {
+            final Date inUpdatedAt,
+            final String inUser) {
         this.id = Objects.requireNonNull(inId);
         this.fqdn = Objects.requireNonNull(inFqdn);
         this.name = Objects.requireNonNull(inName);
         this.createdAt = Objects.requireNonNull(inCreatedAt);
         this.updatedAt = Objects.requireNonNull(inUpdatedAt);
+        this.user = inUser;
     }
 }

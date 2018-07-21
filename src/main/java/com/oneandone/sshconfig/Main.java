@@ -24,6 +24,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
@@ -46,9 +47,15 @@ public class Main {
     /** The status line to output the current progress with. */
     private final StatusLine statusLine;
 
-    /** Constructs an instance. */
-    public Main() {
-        statusLine = new StatusLine(System.err);
+    /** The command line parameters. */
+    private final Params params;
+
+    /** Constructs an instance.
+     * @param inParams the command line parameters to use.
+     * */
+    public Main(final Params inParams) {
+        this.params = Objects.requireNonNull(inParams);
+        this.statusLine = new StatusLine(System.err);
     }
 
     /** Discover a list of hosts by their DNS name. Will only
@@ -117,6 +124,7 @@ public class Main {
         }
         result.setCreatedAt(new Date());
         result.setUpdatedAt(result.getCreatedAt());
+        result.setUser(params.getUser());
         return result;
     }
 
@@ -191,7 +199,7 @@ public class Main {
                 return;
             }
 
-            Main main = new Main();
+            Main main = new Main(params);
             Database database = Database.fromPath(params.getDb());
             if (params.isDiscover()) {
                 List<Host> hosts = main.discover(params.getArguments());
@@ -209,10 +217,7 @@ public class Main {
             if (params.getSshConfig() != null) {
                 SSHConfig sshc = SSHConfig.fromPath(params.getSshConfig());
                 Optional<String> userOptional = Optional.empty();
-                if (params.isSetUser()) {
-                    userOptional = Optional.of(params.getUser());
-                }
-                sshc.pushOwn(database.getList(), userOptional);
+                sshc.pushOwn(database.getList());
                 sshc.save();
             }
         } catch (IOException e) {

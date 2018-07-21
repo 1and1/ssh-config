@@ -22,7 +22,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -124,24 +123,20 @@ public final class SSHConfig {
     /**
      * Set the own configured hosts.
      * @param hosts the hosts to set.
-     * @param user the optional user to use.
      */
     public void pushOwn(
-            final List<Host> hosts,
-            final Optional<String> user) {
+            final List<Host> hosts) {
         removeOwnEntries();
-        own = generateOwnEntries(hosts, user);
+        own = generateOwnEntries(hosts);
     }
 
     /**
      * Generate the own configured entries.
      * @param hosts the hosts to generate.
-     * @param user the optional user to use.
      * @return the list of lines for the own entries.
      */
     private static List<String> generateOwnEntries(
-            final List<Host> hosts,
-            final Optional<String> user) {
+            final List<Host> hosts) {
         List<String> result = new ArrayList<>();
 
         for (Host h : hosts) {
@@ -159,8 +154,8 @@ public final class SSHConfig {
             hostData.add(String.format("\tHostname %s", h.getFqdn()));
             Stream.of(h.getIps()).forEach(
                     ip -> hostData.add(String.format("\tHostname %s", ip)));
-            if (user.isPresent()) {
-                hostData.add(String.format("\tUser %s", user.get()));
+            if (h.getUser() != null) {
+                hostData.add(String.format("\tUser %s", h.getUser()));
             }
 
             hostData.add(String.format(ENTRY_END_FORMAT, h.getId().toString()));
