@@ -56,7 +56,8 @@ public final class Params {
     /** The user to set for the host entries. */
     @Getter
     @Option(name = "-user", aliases = {"-U"},
-            usage = "The user name to use for the entry for discovery.", metaVar = "USER")
+            usage = "The user name to use for the entry for discovery.",
+            metaVar = "USER")
     private String user;
 
     /** Whether to set the user name. */
