@@ -84,7 +84,7 @@ public final class Params {
      * @param args the command line parameters as passed to the
      * main method.
      * @return the parsed command line parameters or
-     * @{@code null} if the command line parameters could
+     * {@code null} if the command line parameters could
      * not be parsed or the help option was displayed. If the
      * result is @{@code null}, then the program shall exit.
      */
