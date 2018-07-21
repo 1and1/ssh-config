@@ -21,6 +21,8 @@ targets: # which platforms to build an archive for
 - debian_stretch
 git:
   gitUrl: https://github.com/1and1/ssh-config.git
+  branch: master
+  commit: v1.1.4
 redhat:
   group: Development Tools
   relations:
@@ -56,21 +58,21 @@ archlinux:
     - pkg: maven
 # Version history of the package. Used for Debian changelogs.
 versions:
-- version: 1.1.1 # TBD this needs to match the debian version as a string
+- version: 1.1.4 # TBD this needs to match the debian version as a string
   release: stfu
-  date: 2018-07-21T15:25:00+02:00
+  date: 2018-07-21T15:58:00+02:00
   changes:
   - User name is now used in discovery time for the discovered entries, not for everything.
   - Activated Bean Validation for database file entries,
   - Moved packaging to com.oneandone.
-- version: 1.0.1 # TBD this needs to match the debian version as a string
+- version: 1.0.1
   release: stfu
   date: 2018-03-13T17:07:00+02:00
   changes:
   - Moved packaging to de.unitedinternet
   - Added AUTHORS file
   - Build is now checked in TravisCI
-- version: 1.0.0 # TBD this needs to match the debian version as a string
+- version: 1.0.0
   release: stfu
   date: 2018-03-12T16:27:00+02:00
   changes:
@@ -78,7 +80,7 @@ versions:
 # Where to install what on the target system?
 install:
 - copy:
-    from: target/SSHConfig-1.0.2-SNAPSHOT-jar-with-dependencies.jar
+    from: target/SSHConfig-1.1.4-jar-with-dependencies.jar
     to: /usr/share/ssh-config/ssh-config-jar-with-dependencies.jar
     owner: root
     group: root
