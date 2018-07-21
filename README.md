@@ -27,7 +27,7 @@ Use it in your command line. There are multiple use-cases implemented:
 
 Full command line parameters:
 ```
- -database (-D) FILE : The database to use. (Vorgabe: /home/$LOGINUSER/.sshconfig.json
+ -database (-D) FILE : The database to use. (Default: /home/$LOGINUSER/.sshconfig.json
                        )
  -discover (-d)      : Discover hosts given in the command line using DNS.
                        (Default: false)
