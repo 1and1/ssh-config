@@ -10,6 +10,11 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <scm>
+        <url>https://github.com/1and1/ssh-config</url>
+        <connection>scm:git:git@github.com:1and1/ssh-config.git</connection>
+        <developerConnection>scm:git:git@github.com:1and1/ssh-config.git</developerConnection>
+    </scm>
     <dependencies>
         <!-- JSON writing  -->
         <dependency>
