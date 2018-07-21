@@ -38,7 +38,7 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "fqdn")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Host {
+public final class Host {
 
     /** The unique ID of the host. */
     @Getter @Setter @NotNull
