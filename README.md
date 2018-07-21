@@ -26,16 +26,16 @@ Use it in your command line. There are multiple use-cases implemented:
 
 Full command line parameters:
 ```
- -database (-D) FILE : The database to use. (Default: /home/$LOGINUSER/.sshconfig.j
-                       son)
+ -database (-D) FILE : The database to use. (Vorgabe: /home/$LOGINUSER/.sshconfig.json
+                       )
  -discover (-d)      : Discover hosts given in the command line using DNS.
                        (Default: false)
  -help (-h)          : Show this command line help. (Default: true)
- -set-user (-Z)      : Set the user name. (Default: false)
  -sshcfg (-s) FILE   : The ssh config to update. (Default:
                        /home/$LOGINUSER/.ssh/config)
- -update (-u)        : Update all hosts IP addresses. (Default: false)
- -user (-U) USER     : The user name to use. (Default: $LOGINUSER)
+ -update (-u)        : Update all hosts IP addresses. (Vorgabe: false)
+ -user (-U) USER     : The user name to use for the entry for discovery.
+                       (Default: fury)
 ```
 
 ### Use case 1: Add new hosts to your `$HOME/.ssh/config`
