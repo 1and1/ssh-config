@@ -60,12 +60,6 @@ public final class Params {
             metaVar = "USER")
     private String user;
 
-    /** Whether to set the user name. */
-    @Getter
-    @Option(name = "-set-user", aliases = {"-Z"},
-            usage = "Set the user name.")
-    private boolean setUser = false;
-
     /** The database file to use. */
     @Getter
     @Option(name = "-database", aliases = {"-D"},
