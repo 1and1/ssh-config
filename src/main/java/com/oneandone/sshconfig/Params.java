@@ -56,7 +56,8 @@ public final class Params {
     /** Export the database. */
     @Getter
     @Option(name = "-export", aliases = {"-e"},
-            usage = "Export the database.")
+            usage = "Export the database. User and group parameters "
+                    + "can be used for filtering.")
     private boolean export;
 
     /** The user to set for the host entries. */
