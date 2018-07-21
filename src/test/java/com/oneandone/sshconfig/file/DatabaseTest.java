@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.unitedinternet.sshconfig.file;
+package com.oneandone.sshconfig.file;
 
-import de.unitedinternet.sshconfig.file.Database;
+import com.oneandone.sshconfig.file.Database;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.UUID;
 import org.junit.Test;
-import de.unitedinternet.sshconfig.bind.Host;
+import com.oneandone.sshconfig.bind.Host;
 import static org.junit.Assert.*;
 
 /**

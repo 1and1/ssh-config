@@ -16,6 +16,6 @@
 
 
 /**
- * The main package with the main class and parameter parsing stuff.
+ * Classes for writing the configuration to files.
  */
-package de.unitedinternet.sshconfig;
+package com.oneandone.sshconfig.file;

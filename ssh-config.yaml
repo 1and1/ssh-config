@@ -56,6 +56,11 @@ archlinux:
     - pkg: maven
 # Version history of the package. Used for Debian changelogs.
 versions:
+- version: 1.1.0 # TBD this needs to match the debian version as a string
+  release: stfu
+  date: 2018-07-21T11:03:00+02:00
+  changes:
+  - Moved packaging to com.oneandone
 - version: 1.0.1 # TBD this needs to match the debian version as a string
   release: stfu
   date: 2018-03-13T17:07:00+02:00

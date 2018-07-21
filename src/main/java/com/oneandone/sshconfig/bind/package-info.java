@@ -13,27 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.unitedinternet.sshconfig;
-
-import de.unitedinternet.sshconfig.Params;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 
 /**
- *
- * @author Stephan Fuhrmann
+ * Mappings for binding Java-types to JSON.
  */
-public class ParamsTest {
-    @Test
-    public void testParseWithoutUser() {
-        Params params = Params.parse(new String [] {});
-        assertNotNull(params.getUser());
-    }
-    
-    @Test
-    public void testParseWithUser() {
-        Params params = Params.parse(new String [] {"-user", "foomaster"});
-        assertEquals("foomaster", params.getUser());
-    }
-}
+package com.oneandone.sshconfig.bind;

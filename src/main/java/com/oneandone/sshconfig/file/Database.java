@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.unitedinternet.sshconfig.file;
+package com.oneandone.sshconfig.file;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import de.unitedinternet.sshconfig.bind.Host;
+import com.oneandone.sshconfig.bind.Host;
 import java.util.Objects;
 
 /**

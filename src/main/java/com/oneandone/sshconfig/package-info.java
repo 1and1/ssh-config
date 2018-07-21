@@ -16,6 +16,6 @@
 
 
 /**
- * Mappings for binding Java-types to JSON.
+ * The main package with the main class and parameter parsing stuff.
  */
-package de.unitedinternet.sshconfig.bind;
+package com.oneandone.sshconfig;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.unitedinternet.sshconfig.file;
+package com.oneandone.sshconfig.file;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -26,7 +26,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import de.unitedinternet.sshconfig.bind.Host;
+import com.oneandone.sshconfig.bind.Host;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.logging.MDC;
 

@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.unitedinternet.sshconfig;
+package com.oneandone.sshconfig;
 
-import de.unitedinternet.sshconfig.file.SSHConfig;
-import de.unitedinternet.sshconfig.file.Database;
+import com.oneandone.sshconfig.file.SSHConfig;
+import com.oneandone.sshconfig.file.Database;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
-import de.unitedinternet.sshconfig.bind.Host;
+import com.oneandone.sshconfig.bind.Host;
 import org.slf4j.MDC;
 import static java.util.stream.Collectors.toList;
 

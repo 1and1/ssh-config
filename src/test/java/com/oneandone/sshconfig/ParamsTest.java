@@ -13,9 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.oneandone.sshconfig;
+
+import com.oneandone.sshconfig.Params;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 
 /**
- * Classes for writing the configuration to files.
+ *
+ * @author Stephan Fuhrmann
  */
-package de.unitedinternet.sshconfig.file;
+public class ParamsTest {
+    @Test
+    public void testParseWithoutUser() {
+        Params params = Params.parse(new String [] {});
+        assertNotNull(params.getUser());
+    }
+    
+    @Test
+    public void testParseWithUser() {
+        Params params = Params.parse(new String [] {"-user", "foomaster"});
+        assertEquals("foomaster", params.getUser());
+    }
+}
