@@ -142,4 +142,12 @@ public final class Database {
     public List<Host> getList() {
         return Collections.unmodifiableList(list);
     }
+
+    /** Replace the entries in the database with the given list.
+     * @param replacement the replacement to replace the list with.
+     * */
+    public void replace(final List<Host> replacement) {
+        replacement.clear();
+        replacement.addAll(replacement);
+    }
 }

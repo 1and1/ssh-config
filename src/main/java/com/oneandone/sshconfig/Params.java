@@ -53,6 +53,12 @@ public final class Params {
             usage = "Update all hosts IP addresses.")
     private boolean update;
 
+    /** Export the database. */
+    @Getter
+    @Option(name = "-export", aliases = {"-e"},
+            usage = "Export the database.")
+    private boolean export;
+
     /** The user to set for the host entries. */
     @Getter
     @Option(name = "-user", aliases = {"-U"},

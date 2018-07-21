@@ -17,7 +17,10 @@ package com.oneandone.sshconfig;
 
 import com.oneandone.sshconfig.file.SSHConfig;
 import com.oneandone.sshconfig.file.Database;
+
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -190,6 +193,37 @@ public final class Main implements AutoCloseable {
         }
     }
 
+    /** Export the database to the {@link Params#getArguments() file}
+     * or to the output stream.
+     * @param database the database to write.
+     * @throws IOException if the writing fails.
+     * */
+    private void export(final Database database) throws IOException {
+        List<Host> list = new ArrayList<>(database.getList());
+        if (params.getUser() != null) {
+            list = list
+                    .stream()
+                    .filter(h -> params.getUser().equals(h.getUser()))
+                    .collect(toList());
+        }
+        if (params.getGroup() != null) {
+            list = list
+                    .stream()
+                    .filter(h -> params.getGroup().equals(h.getGroup()))
+                    .collect(toList());
+        }
+
+        database.replace(list);
+
+        if (params.getArguments().isEmpty()) {
+            database.save(new OutputStreamWriter(System.out));
+        } else {
+            try (FileWriter w = new FileWriter(params.getArguments().get(0))) {
+                database.save(w);
+            }
+        }
+    }
+
     /** Entry point for the program.
      * @param args the command line arguments for parsing with {@link Params}.
      */
@@ -210,6 +244,9 @@ public final class Main implements AutoCloseable {
                 hosts.addAll(database.getList());
                 main.update(hosts);
                 database.update(hosts);
+            }
+            if (params.isExport()) {
+                main.export(database);
             }
 
             database.save();
