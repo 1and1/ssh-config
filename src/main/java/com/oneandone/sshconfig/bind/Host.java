@@ -20,6 +20,9 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import lombok.EqualsAndHashCode;
@@ -40,27 +43,27 @@ public class Host {
     private UUID id;
 
     /** Fully qualified domain name of the host. */
-    @Getter @Setter
+    @Getter @Setter @Size(min = 1)
     private String fqdn;
 
     /** The human readable name of the host. */
-    @Getter @Setter @NotNull
+    @Getter @Setter @NotNull @Size(min = 1)
     private String name;
 
     /** The IP addresses of the host. */
-    @Getter @Setter @NotNull
+    @Getter @Setter @NotNull @Size(min = 1)
     private String[] ips;
 
     /** The date of creation of this hosts entry. */
-    @Getter @Setter @NotNull
+    @Getter @Setter @NotNull @PastOrPresent
     private Date createdAt;
 
     /** The date of last update of this hosts entry. */
-    @Getter @Setter @NotNull
+    @Getter @Setter @NotNull @PastOrPresent
     private Date updatedAt;
 
     /** The ssh version this host responded with. */
-    @Getter @Setter @NotNull
+    @Getter @Setter @NotNull @Size(min = 1)
     private String sshServerVersion;
 
     /** Whether this host is enabled or not. */
@@ -68,7 +71,7 @@ public class Host {
     private Boolean enabled;
 
     /** The user to use for this host. */
-    @Getter @Setter
+    @Getter @Setter @Pattern(regexp = "[^ ]{1,}")
     private String user;
 
     /** Constructs a new empty host entry. */
