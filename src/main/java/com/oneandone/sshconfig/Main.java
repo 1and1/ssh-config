@@ -199,19 +199,15 @@ public final class Main implements AutoCloseable {
      * @throws IOException if the writing fails.
      * */
     private void export(final Database database) throws IOException {
-        List<Host> list = new ArrayList<>(database.getList());
-        if (params.getUser() != null) {
-            list = list
+        List<Host> original = database.getList();
+        List<Host> list;
+        list = database.getList()
                     .stream()
-                    .filter(h -> params.getUser().equals(h.getUser()))
+                    .filter(h -> params.getUser() == null
+                            || params.getUser().equals(h.getUser()))
+                    .filter(h -> params.getGroup() == null
+                            || params.getGroup().equals(h.getGroup()))
                     .collect(toList());
-        }
-        if (params.getGroup() != null) {
-            list = list
-                    .stream()
-                    .filter(h -> params.getGroup().equals(h.getGroup()))
-                    .collect(toList());
-        }
 
         database.replace(list);
 
@@ -222,6 +218,8 @@ public final class Main implements AutoCloseable {
                 database.save(w);
             }
         }
+
+        database.replace(original);
     }
 
     /** Entry point for the program.
@@ -238,18 +236,18 @@ public final class Main implements AutoCloseable {
             if (params.isDiscover()) {
                 List<Host> hosts = main.discover(params.getArguments());
                 database.update(hosts);
+                database.save();
             }
             if (params.isUpdate()) {
                 List<Host> hosts = new ArrayList<>();
                 hosts.addAll(database.getList());
                 main.update(hosts);
                 database.update(hosts);
+                database.save();
             }
             if (params.isExport()) {
                 main.export(database);
             }
-
-            database.save();
 
             if (params.getSshConfig() != null) {
                 SSHConfig sshc = SSHConfig.fromPath(params.getSshConfig());
