@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
  * Status line on console.
  * @author Stephan Fuhrmann
  * */
-public final class StatusLine {
+public final class StatusLine implements AutoCloseable {
     /** Width of last printed line in characters. */
     private int width;
 
@@ -63,5 +63,11 @@ public final class StatusLine {
         }
         out.print("\r" + str + fill);
         width = str.length();
+    }
+
+    @Override
+    public void close() throws Exception {
+        out.print("\n");
+        out.flush();
     }
 }
