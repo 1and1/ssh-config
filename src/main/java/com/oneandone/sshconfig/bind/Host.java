@@ -76,6 +76,10 @@ public class Host {
     @Getter @Setter @Pattern(regexp = "[^ ]{1,}")
     private String user;
 
+    /** The group for this host. */
+    @Getter @Setter @Pattern(regexp = "[^ ]{1,}")
+    private String group;
+
     /** Constructs a new empty host entry. */
     public Host() {
         id = UUID.randomUUID();

@@ -125,6 +125,7 @@ public final class Main implements AutoCloseable {
         result.setCreatedAt(new Date());
         result.setUpdatedAt(result.getCreatedAt());
         result.setUser(params.getUser());
+        result.setGroup(params.getGroup());
         return result;
     }
 

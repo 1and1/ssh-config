@@ -60,6 +60,13 @@ public final class Params {
             metaVar = "USER")
     private String user;
 
+    /** The group to set for the host entries. */
+    @Getter
+    @Option(name = "-group", aliases = {"-G"},
+            usage = "The group name to use for the entry for discovery.",
+            metaVar = "USER")
+    private String group;
+
     /** The database file to use. */
     @Getter
     @Option(name = "-database", aliases = {"-D"},
