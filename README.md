@@ -23,19 +23,29 @@ This is where the tool comes into place.
 Use it in your command line. There are multiple use-cases implemented:
 * **Discover (-d):** Discover new hosts given in the command line using DNS lookups.
 * **Update (-u):** Update the known hosts in the database using DNS and tested host reachability. 
+* **Export (-e):** Export the database to a file / stdout. Supports filtering by user or group name.
+* **Import (-i):** Import the database from a file / stdin. 
+
 
 Full command line parameters:
 ```
- -database (-D) FILE : The database to use. (Default: /home/$LOGINUSER/.sshconfig.json
+ -database (-D) FILE : The database to use. (default: /home/$USER/.sshconfig.json
                        )
  -discover (-d)      : Discover hosts given in the command line using DNS.
-                       (Default: false)
- -help (-h)          : Show this command line help. (Default: true)
- -sshcfg (-s) FILE   : The ssh config to update. (Default:
-                       /home/$LOGINUSER/.ssh/config)
- -update (-u)        : Update all hosts IP addresses. (Vorgabe: false)
- -user (-U) USER     : The user name to use for the entry for discovery.
-                       (Default: fury)
+                       (default: false)
+ -export (-e)        : Export the database. Writes to stdout or file argument.
+                       User and group parameters can be used for filtering.
+                       (default: false)
+ -group (-G) GROUP   : The group name to use for the entry for discovery or
+                       export filtering.
+ -help (-h)          : Show this command line help. (default: true)
+ -import (-i)        : Import a database. Reads either from argument or stdin.
+                       (default: false)
+ -sshcfg (-s) FILE   : The ssh config to update. (default:
+                       /home/$USER/.ssh/config)
+ -update (-u)        : Update all database hosts IP addresses. (default: false)
+ -user (-U) USER     : The user name to use for the entry for discovery or
+                       export filtering.
 ```
 
 ### Use case 1: Add new hosts to your `$HOME/.ssh/config`
