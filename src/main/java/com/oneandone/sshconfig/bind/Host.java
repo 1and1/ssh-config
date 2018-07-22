@@ -15,6 +15,7 @@
  */
 package com.oneandone.sshconfig.bind;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 import java.util.Objects;
@@ -23,8 +24,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 
 import com.oneandone.sshconfig.validation.IpAddress;
 import lombok.EqualsAndHashCode;
@@ -36,7 +35,7 @@ import lombok.Setter;
  * @author Stephan Fuhrmann
  */
 @EqualsAndHashCode(of = "fqdn")
-@XmlAccessorType(XmlAccessType.FIELD)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class Host {
 
