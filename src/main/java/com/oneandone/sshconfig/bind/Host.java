@@ -25,6 +25,7 @@ import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.oneandone.sshconfig.validation.IpAddress;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -37,6 +38,17 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "fqdn")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonPropertyOrder({
+        "id",
+        "name",
+        "fqdn",
+        "enabled",
+        "user",
+        "group",
+        "createdAt",
+        "updatedAt",
+        "ips",
+        "sshServerVersion" })
 public final class Host {
 
     /** The unique ID of the host. */
