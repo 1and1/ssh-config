@@ -59,7 +59,6 @@ public final class IpAddressValidator
             InetAddress.getByName(value);
             result = true;
         } catch (UnknownHostException e) {
-            constraintContext.disableDefaultConstraintViolation();
             constraintContext.buildConstraintViolationWithTemplate(
                     e.getMessage());
         }
