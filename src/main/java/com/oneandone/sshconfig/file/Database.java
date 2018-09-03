@@ -101,7 +101,7 @@ public final class Database {
             db.list = mapper.readValue(
                     f.toFile(),
                     new TypeReference<List<Host>>() { });
-            db.sanitize();
+            // db.sanitize();
         } else {
             db.list = new ArrayList<>();
         }
