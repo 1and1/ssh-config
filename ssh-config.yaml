@@ -21,7 +21,7 @@ targets: # which platforms to build an archive for
 - debian_stretch
 git:
   gitUrl: https://github.com/1and1/ssh-config.git
-  branch: v1.1.6
+  branch: v1.1.8
 redhat:
   group: Development Tools
   relations:
@@ -57,6 +57,11 @@ archlinux:
     - pkg: maven
 # Version history of the package. Used for Debian changelogs.
 versions:
+- version: 1.1.8 # TBD this needs to match the debian version as a string
+  release: stfu
+  date: 2018-09-03T17:26:00+02:00
+  changes:
+  - Fix validation bug.
 - version: 1.1.6 # TBD this needs to match the debian version as a string
   release: stfu
   date: 2018-07-23T13:38:00+02:00
@@ -90,7 +95,7 @@ versions:
 # Where to install what on the target system?
 install:
 - copy:
-    from: target/SSHConfig-1.1.6-jar-with-dependencies.jar
+    from: target/SSHConfig-1.1.8-jar-with-dependencies.jar
     to: /usr/share/ssh-config/ssh-config-jar-with-dependencies.jar
     owner: root
     group: root
