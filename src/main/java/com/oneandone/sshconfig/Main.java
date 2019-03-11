@@ -72,15 +72,13 @@ public final class Main implements AutoCloseable {
     private List<Host> discover(final List<String> discover) {
         log.debug("Discovering started for {} args", discover.size());
 
-        List<Host> hosts = discover
+        return discover
                 .stream()
                 .parallel()
                 .map(discoverMe -> ignorantDiscover(discoverMe))
-                .filter(h -> h.isPresent())
-                .map(h -> h.get())
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(toList());
-
-        return hosts;
     }
 
     /** Discover a single host using DNS. Silently ignores DNS / IO errors.
