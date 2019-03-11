@@ -56,26 +56,26 @@ public final class SSHHostData {
      */
     public static SSHHostData from(
             final InetSocketAddress serverAddress) throws IOException {
-        Socket socket = new Socket();
-        socket.connect(serverAddress, TIMEOUT);
-        socket.setSoTimeout(TIMEOUT);
-        InputStream inputStream = socket.getInputStream();
-        InputStreamReader inputStreamReader = new InputStreamReader(
-                inputStream,
-                Charset.forName("ASCII"));
-        StringBuilder myServerId = new StringBuilder();
-
         SSHHostData result = new SSHHostData();
+        try (Socket socket = new Socket()) {
+            socket.connect(serverAddress, TIMEOUT);
+            socket.setSoTimeout(TIMEOUT);
+            InputStream inputStream = socket.getInputStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(
+                    inputStream,
+                    Charset.forName("ASCII"));
+            StringBuilder myServerId = new StringBuilder();
 
-        int c;
-        while ((c = inputStreamReader.read()) != -1) {
-            if (c == '\n' || c == '\r') {
-                break;
+            int c;
+            while ((c = inputStreamReader.read()) != -1) {
+                if (c == '\n' || c == '\r') {
+                    break;
+                }
+                myServerId.append((char) c);
             }
-            myServerId.append((char) c);
+            result.setServerId(myServerId.toString());
+            result.setAddress(serverAddress);
         }
-        result.setServerId(myServerId.toString());
-        result.setAddress(serverAddress);
         return result;
     }
 }
