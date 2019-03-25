@@ -12,6 +12,7 @@ public final class IpAddressValidator
         implements ConstraintValidator<IpAddress, Object> {
     @Override
     public void initialize(final IpAddress constraintAnnotation) {
+        // ignore constraint annotation for now
     }
 
     @Override
