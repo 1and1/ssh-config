@@ -77,7 +77,6 @@ public class ValidationDelegate {
         if (!violations.isEmpty()) {
             log.error("Got {} validation errors", violations.size());
             violations.forEach(u -> log.error(format(u)));
-            log.error("Got {} validation errors", violations.size());
         } else {
             log.debug("Object validated");
         }
