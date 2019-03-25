@@ -276,6 +276,7 @@ public final class Main implements AutoCloseable {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            log.warn("Got exception", e);
         }
     }
 
