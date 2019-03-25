@@ -56,7 +56,7 @@ public final class Host {
     private UUID id;
 
     /** Fully qualified domain name of the host. */
-    @Getter @Setter @Size(min = 1) @IpAddress
+    @Getter @Setter @Size(min = 1)
     private String fqdn;
 
     /** The human readable name of the host. */
