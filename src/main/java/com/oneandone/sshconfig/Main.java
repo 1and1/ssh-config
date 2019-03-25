@@ -115,11 +115,11 @@ public final class Main implements AutoCloseable {
         result.setFqdn(address.getCanonicalHostName());
         InetAddress[] all = InetAddress.getAllByName(in);
         List<String> allIps = Stream.of(all)
-                .map(i -> i.getHostAddress())
+                .map(InetAddress::getHostAddress)
                 .collect(toList());
         result.setIps(allIps.toArray(new String[all.length]));
         statusLine.printf("%s -> %s", in, allIps.toString());
-        int idx = in.indexOf(".");
+        int idx = in.indexOf('.');
         if (idx != -1) {
             result.setName(in.substring(0, idx));
         } else {
@@ -137,7 +137,7 @@ public final class Main implements AutoCloseable {
      * @throws UnknownHostException if the host could not be resolved
      * by domain name service.
      */
-    private void update(final List<Host> hosts) throws UnknownHostException {
+    private void update(final List<Host> hosts) {
         AtomicInteger atomicInteger = new AtomicInteger();
         hosts.stream().parallel().forEach(h -> {
             try {
@@ -162,7 +162,7 @@ public final class Main implements AutoCloseable {
         try {
             InetAddress[] all = InetAddress.getAllByName(h.getFqdn());
             List<String> allIps = Stream.of(all)
-                    .map(i -> i.getHostAddress())
+                    .map(InetAddress::getHostAddress)
                     .collect(toList());
             h.setIps(allIps.toArray(new String[all.length]));
         } catch (UnknownHostException ex) {
@@ -230,10 +230,10 @@ public final class Main implements AutoCloseable {
                     .collect(toList());
 
         if (params.getArguments().isEmpty()) {
-            database.save(new OutputStreamWriter(System.out), list);
+            Database.save(new OutputStreamWriter(System.out), list);
         } else {
             try (FileWriter w = new FileWriter(params.getArguments().get(0))) {
-                database.save(w, list);
+                Database.save(w, list);
             }
         }
     }
