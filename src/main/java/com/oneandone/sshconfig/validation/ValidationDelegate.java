@@ -74,11 +74,9 @@ public class ValidationDelegate {
      */
     public final <T> Set<ConstraintViolation<T>> validate(final T o) {
         final Set<ConstraintViolation<T>> violations = validator.validate(o);
-        if (violations.size() > 0) {
+        if (!violations.isEmpty()) {
             log.error("Got {} validation errors", violations.size());
-            violations.forEach(u -> {
-                log.error(format(u));
-            });
+            violations.forEach(u -> log.error(format(u)));
             log.error("Got {} validation errors", violations.size());
         } else {
             log.debug("Object validated");
