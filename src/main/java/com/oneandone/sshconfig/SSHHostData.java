@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /** Data gathered directly from the SSH server.
  * @author Stephan Fuhrmann
@@ -63,7 +64,7 @@ public final class SSHHostData {
             InputStream inputStream = socket.getInputStream();
             InputStreamReader inputStreamReader = new InputStreamReader(
                     inputStream,
-                    Charset.forName("ASCII"));
+                    StandardCharsets.US_ASCII);
             StringBuilder myServerId = new StringBuilder();
 
             int c;
