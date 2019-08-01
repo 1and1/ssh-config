@@ -136,11 +136,14 @@ public final class Host {
         if (from.getIps() != null) {
             setIps(from.getIps());
         }
-        if (from.getSshServerVersion() != null) {
-            setSshServerVersion(from.getSshServerVersion());
-        }
         if (from.getEnabled() != null) {
             setEnabled(from.getEnabled());
+        }
+        if (from.getSshServerVersion() != null) {
+            setSshServerVersion(from.getSshServerVersion());
+            if (from.getEnabled() == Boolean.FALSE) {
+                setEnabled(from.getEnabled());
+            }
         }
         if (from.getUser() != null) {
             setUser(from.getUser());
