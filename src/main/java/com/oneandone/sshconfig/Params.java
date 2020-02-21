@@ -47,11 +47,19 @@ public final class Params {
             usage = "Discover hosts given in the command line using DNS.")
     private boolean discover;
 
-    /** Update the hosts in the database. */
+    /** Update enabled hosts in the database. */
     @Getter
     @Option(name = "-update", aliases = {"-u"},
-            usage = "Update all database hosts IP addresses.")
+            usage = "Update enabled database hosts IP addresses (restricted to"
+                    + " enabled).")
     private boolean update;
+
+    /** Update all hosts in the database. */
+    @Getter
+    @Option(name = "-update-all", aliases = {"-A"},
+            usage = "Update all database hosts IP addresses"
+                    + " (includes disabled).")
+    private boolean updateAll;
 
     /** Import into the database. */
     @Getter

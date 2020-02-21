@@ -139,7 +139,9 @@ public final class Main implements AutoCloseable {
      */
     private void update(final List<Host> hosts) {
         AtomicInteger atomicInteger = new AtomicInteger();
-        hosts.stream().parallel().forEach(h -> {
+        hosts.stream()
+                .parallel()
+                .forEach(h -> {
             try {
                 updateFqdn(h);
                 updateServerAndReachability(h);
@@ -254,9 +256,11 @@ public final class Main implements AutoCloseable {
                 database.update(hosts);
                 database.save();
             }
-            if (params.isUpdate()) {
-                List<Host> hosts = new ArrayList<>();
-                hosts.addAll(database.getList());
+            if (params.isUpdate() || params.isUpdateAll()) {
+                List<Host> hosts = new ArrayList<>(database.getList());
+                if (params.isUpdateAll()) {
+                    hosts.stream().forEach(h -> h.setEnabled(true));
+                }
                 main.update(hosts);
                 database.update(hosts);
                 database.save();
