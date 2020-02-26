@@ -37,6 +37,10 @@
       <email>s@sfuhrm.de</email>
     </developer>
   </developers>
+  <organization>
+    <name>1&amp;1 Ionos SE</name>
+    <url>http://www.ionos.com/</url>
+  </organization>
   <profiles>
     <profile>
       <id>release</id>
