@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="OFF" monitorInterval="30" name="SSH-Config">
+
+  <Appenders>
+    <Console name="console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%p: %m%n%throwable{1}" />
+    </Console>
+
+    <RollingFile name="file" fileName="/tmp/sshconfig.log" filePattern="/tmp/sshconfig.log-%d{yyyy-MM-dd}-%i.log.gz" append="true">
+      <PatternLayout>
+        <Pattern>%d{ISO8601} %-5level [%t] %c{1.}.%M:%L - %m%n</Pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy/>
+        <SizeBasedTriggeringPolicy size="50 MB"/>
+      </Policies>
+      <DefaultRolloverStrategy max="60"/>
+    </RollingFile>
+  </Appenders>
+
+  <Loggers>
+    <Root level="WARN"  additivity="false">
+      <AppenderRef ref="console" />
+      <AppenderRef ref="file" />
+    </Root>
+    <Logger name="com.oneandone" level="DEBUG" additivity="false">
+      <AppenderRef ref="console" />
+      <AppenderRef ref="file" />
+    </Logger>
+  </Loggers>
+</Configuration>
