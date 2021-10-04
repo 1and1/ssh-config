@@ -1,7 +1,6 @@
 SSH-Config
 ===================
 [![Java CI with Maven](https://github.com/1and1/ssh-config/actions/workflows/maven.yml/badge.svg)](https://github.com/1and1/ssh-config/actions/workflows/maven.yml)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e2354f91e2ab4fb48f6e460a0ab1ad99)](https://www.codacy.com/app/sfuhrm/ssh-config?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=1and1/ssh-config&amp;utm_campaign=Badge_Grade)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Tool for helping automatically maintain SSH client configs.
