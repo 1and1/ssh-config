@@ -5,6 +5,8 @@ SSH-Config
 [![ReleaseDate](https://img.shields.io/github/release-date/1and1/ssh-config)](https://github.com/1and1/ssh-config/releases)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
+*This project has been set to read-only since there is no longer an active maintainer in the organization.*
+
 Tool for helping automatically maintain SSH client configs.
 It can be used to maintain a database of your logins to remote hosts.
 
